@@ -1,9 +1,9 @@
-MySQL AUDIT Plugin
+AUDIT Plugin for MySQL<sup>*</sup>
 ===================
 
-MySQL AUDIT Plugin is a MySQL plugin from McAfee providing audit capabilities for MySQL, 
+A MySQL plugin from McAfee providing audit capabilities for MySQL, 
 designed with an emphasis on security and audit requirements. The plugin may be used 
-as a stand alone audit solution or configured to feed data to external monitoring tools.
+as a standalone audit solution or configured to feed data to external monitoring tools.
 
 
 Installation and Configuration 
@@ -14,12 +14,14 @@ Please check out our wiki on github for detailed installation and configuration 
 https://github.com/mcafee/mysql-audit/wiki 
 
 
-Reporting Bugs
+Issues
 ------------------------------
 
-Please report bugs to: https://github.com/mcafee/mysql-audit/issues
+Found a bug? Got a feature request or question?
 
-Please describe the problem verbosely. Try to see if it reproduces and 
+Please feel free to report to: https://github.com/mcafee/mysql-audit/issues
+
+If reporting a bug, please describe the problem verbosely. Try to see if it reproduces and 
 include a detailed description on how to reproduce.
  
 Make sure to include your MySQL Server version and Audit Plugin version.
@@ -35,12 +37,12 @@ Log file location can be queried by running the following command:
 
 Source Code
 -------------------------------
-Source code of AUDIT plugin is available at: https://github.com/mcafee/mysql-audit
+Source code is available at: https://github.com/mcafee/mysql-audit
 
 	
 License
 -------------------------------
-Copyright (C) 2012 McAfee, Inc.
+Copyright (C) 2016 McAfee, Inc.
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU 
 General Public License as published by the Free Software Foundation; version 2 of the License.
@@ -50,3 +52,5 @@ without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
 See the GNU General Public License for more details.
 
 See COPYING file for a copy of the GPL Version 2 license.
+
+<sup>*</sup> Other trademarks and brands may be claimed as the property of others.

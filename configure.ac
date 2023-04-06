@@ -50,6 +50,12 @@ AC_SUBST(YAJL_INC)
 UDIS_INC=-I`cd udis86 && pwd`
 AC_SUBST(UDIS_INC)
 
+#pcre
+(cd pcre && CFLAGS=-fPIC ./configure --enable-utf --disable-cpp --disable-shared --enable-static )
+if test $? -ne 0 ; then 
+	AC_MSG_ERROR([Failed pcre configure])
+fi
+
 
 dnl AC_PROG_CC set CFLAGS=-g if CFLAGS was empty before. Reset to empty value
 dnl when not building a debug version.
@@ -88,9 +94,10 @@ AC_PATH_PROG(DIFF, diff, diff)
 #CPPFLAGS="$CPPFLAGS -DMYSQL_DYNAMIC_PLUGIN -DMYSQL_SERVER"
 
 #we can add the following flags for better error catching: -Werror -Wimplicit
-CPPFLAGS="$CPPFLAGS -Werror -Wimplicit"
+CPPFLAGS="$CPPFLAGS -Werror -Wall"
+CFLAGS="$CFLAGS -Wimplicit"
 # From MySQL: Disable exceptions as they seams to create problems with gcc and threads.
-CXXFLAGS="-fno-implicit-templates -fno-exceptions -fno-rtti "
+CXXFLAGS="-fno-implicit-templates -fno-exceptions -fno-rtti -Wno-reorder -Wno-strict-aliasing"
 
 #add pthread libs
 LIBS="$LIBS -lpthread"
@@ -109,12 +116,17 @@ fi
 if test -z "$MYSQL_AUDIT_PLUGIN_REVISION" ;then
 	MYSQL_AUDIT_PLUGIN_REVISION=99999
 fi
+if test -z "$MYSQL_AUDIT_PLUGIN_SYMBOL_VERSION" ;then
+        MYSQL_AUDIT_PLUGIN_SYMBOL_VERSION=${MYSQL_AUDIT_PLUGIN_VERSION//./_}_$MYSQL_AUDIT_PLUGIN_REVISION
+fi
+
 
 AC_SUBST(MYSQL_AUDIT_PLUGIN_VERSION)
 AC_SUBST(MYSQL_AUDIT_PLUGIN_REVISION)
-echo "Version: $MYSQL_AUDIT_PLUGIN_VERSION-$MYSQL_AUDIT_PLUGIN_REVISION"
+echo "Version: $MYSQL_AUDIT_PLUGIN_VERSION-$MYSQL_AUDIT_PLUGIN_REVISION Symbol version: $MYSQL_AUDIT_PLUGIN_SYMBOL_VERSION"
 CPPFLAGS="$CPPFLAGS -DMYSQL_AUDIT_PLUGIN_VERSION='\"$MYSQL_AUDIT_PLUGIN_VERSION\"'"
 CPPFLAGS="$CPPFLAGS -DMYSQL_AUDIT_PLUGIN_REVISION='\"$MYSQL_AUDIT_PLUGIN_REVISION\"'"
+CPPFLAGS="$CPPFLAGS '-DMYSQL_AUDIT_PLUGIN_SYMBOL_VERSION()=extern const char audit_plugin_version_$MYSQL_AUDIT_PLUGIN_SYMBOL_VERSION'"
 
 
 #subst the relevant variables
